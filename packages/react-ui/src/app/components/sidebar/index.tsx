@@ -1,3 +1,4 @@
+/** @jsxRuntime classic */
 import { t } from 'i18next';
 import {
   ChevronDownIcon,
@@ -5,8 +6,10 @@ import {
   Link2,
   LockKeyhole,
   VideoIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
 } from 'lucide-react';
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 import { BetaBadge } from '@/components/custom/beta-badge';
@@ -183,13 +186,16 @@ type SidebarProps = {
   items: SidebarItem[];
   isHomeDashboard?: boolean;
   hideSideNav?: boolean;
+  collapsible?: 'offcanvas' | 'icon' | 'none';
 };
 export function SidebarComponent({
   children,
   items,
   isHomeDashboard = false,
   hideSideNav = false,
+  collapsible = 'offcanvas',
 }: SidebarProps) {
+  const [collapsed, setCollapsed] = useState(false);
   const { platform } = platformHooks.useCurrentPlatform();
   const { data: edition } = flagsHooks.useFlag<ApEdition>(ApFlagId.EDITION);
 
@@ -206,9 +212,27 @@ export function SidebarComponent({
     <div className="flex h-screen w-full overflow-hidden">
       <div className="flex h-screen w-full">
         {!hideSideNav && (
-          <Sidebar className="h-screen">
-            <SidebarContent className="h-full flex flex-col">
-              <ApDashboardSidebarHeader isHomeDashboard={isHomeDashboard} />
+            <Sidebar style={{width: collapsed ? "4rem !important" : "16rem !important"}} className="h-screen" collapsible={collapsible}>
+            <SidebarContent className="h-full flex flex-col justify-between">
+              <div className="flex items-center justify-between p-2">
+                <ApDashboardSidebarHeader isHomeDashboard={isHomeDashboard} />
+                
+              </div>
+              <Button
+                  variant="ghost"
+                  size="icon"
+                  className="rounded-full hover:bg-sidebar-accent"
+                  onClick={() => {
+                    setCollapsed(!collapsed);
+                    console.log("Collapsed:", !collapsed);
+                  }}
+                >
+                  {collapsed ? (
+                    <ChevronRightIcon className="size-4" />
+                  ) : (
+                    <ChevronLeftIcon className="size-4" />
+                  )}
+                </Button>
               <div className="flex-1 overflow-hidden">
                 <ScrollArea className="h-full">
                   <div className="space-y-0">
