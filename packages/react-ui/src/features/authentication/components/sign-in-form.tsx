@@ -65,7 +65,13 @@ const SignInForm: React.FC = () => {
     mutationFn: authenticationApi.signIn,
     onSuccess: (data) => {
       authenticationSession.saveResponse(data, false);
-      redirectAfterLogin();
+      const urlParams = new URLSearchParams(window.location.search);
+      const from = urlParams.get('from');
+      if (!from) {
+        window.location.replace('/flows');
+      } else {
+        redirectAfterLogin();
+      }
     },
     onError: (error) => {
       if (api.isError(error)) {
@@ -167,8 +173,7 @@ const SignInForm: React.FC = () => {
                       to="/forget-password"
                       className="text-muted-foreground text-sm hover:text-primary transition-all duration-200"
                     >
-                      {t('Forgot your password?')}
-                    </Link>
+                      {t('Forgot your password?')}</Link>
                   )}
                 </div>
                 <Input
@@ -194,8 +199,7 @@ const SignInForm: React.FC = () => {
             onClick={(e) => form.handleSubmit(onSubmit)(e)}
             tabIndex={3}
           >
-            {t('Sign in')}
-          </Button>
+            {t('Sign in')}</Button>
         </form>
       </Form>
 

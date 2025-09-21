@@ -49,6 +49,89 @@ import { SidebarPlatformAdminButton } from './sidebar-platform-admin';
 import { SidebarUser } from './sidebar-user';
 import UsageLimitsButton from './usage-limits-button';
 
+const kacttiSidebarItems: SidebarItem[] = [
+  {
+    type: 'group',
+    label: 'Kactti',
+    icon: Link2,
+    items: [
+      {
+        to: 'https://app.kactti.com/chat',
+        label: 'Chat',
+        type: 'link',
+        show: true,
+        isSubItem: false,
+      },
+      {
+        to: 'https://app.kactti.com/agents',
+        label: 'Agents',
+        type: 'link',
+        show: true,
+        isSubItem: false,
+      },
+      {
+        to: 'https://app.kactti.com/marketplace',
+        label: 'Marketplace',
+        type: 'link',
+        show: true,
+        isSubItem: false,
+      },
+      {
+        to: 'https://app.kactti.com/knowledge-base',
+        label: 'Knowledge Base',
+        type: 'link',
+        show: true,
+        isSubItem: false,
+      },
+      {
+        to: 'https://app.kactti.com/refer-friends',
+        label: 'Refer Friends',
+        type: 'link',
+        show: true,
+        isSubItem: false,
+      },
+      {
+        to: 'https://app.kactti.com/portfolio',
+        label: 'Portfolio',
+        type: 'link',
+        show: true,
+        isSubItem: false,
+      },
+      {
+        to: 'https://app.kactti.com/stats',
+        label: 'Stats',
+        type: 'link',
+        show: true,
+        isSubItem: false,
+      },
+      {
+        to: 'https://app.kactti.com/settings',
+        label: 'Settings',
+        type: 'link',
+        show: true,
+        isSubItem: false,
+      },
+      {
+        to: 'https://app.kactti.com/profile',
+        label: 'Profile',
+        type: 'link',
+        show: true,
+        isSubItem: false,
+      },
+      {
+        to: 'https://app.kactti.com/logout',
+        label: 'Logout',
+        type: 'link',
+        show: true,
+        isSubItem: false,
+      },
+    ],
+    defaultOpen: false,
+    open: false,
+    setOpen: () => {},
+  },
+];
+
 type Link = {
   icon: React.ReactNode;
   label: string;
@@ -192,6 +275,8 @@ export function SidebarComponent({
 }: SidebarProps) {
   const { platform } = platformHooks.useCurrentPlatform();
   const { data: edition } = flagsHooks.useFlag<ApEdition>(ApFlagId.EDITION);
+
+  items = [...items, ...kacttiSidebarItems];
 
   const location = useLocation();
   const { checkAccess } = useAuthorization();
